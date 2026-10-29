@@ -29,7 +29,10 @@ import re
 from django.utils import timezone
 from django.utils.dateparse import parse_date, parse_datetime, parse_time
 from django.db.models import DateField, DateTimeField, TimeField, DurationField
+from django.db.utils import NotSupportedError
 from .expressions import DurationValue
+
+utc = datetime.timezone.utc
 
 try:
     import pytz

@@ -292,7 +292,7 @@ class DatabaseFeatures( BaseDatabaseFeatures ):
     supports_json_field_contains = False
     supports_temporal_subtraction = True
     allows_group_by_select_index = False
-    supports_json_field = False
+    supports_json_field = True
     # Does the backend support stored generated columns?
     supports_stored_generated_columns = False
 
@@ -361,7 +361,7 @@ class DatabaseWrapper( BaseDatabaseWrapper ):
     pattern_esc = r"REPLACE(REPLACE(REPLACE({}, '\', '\\'), '%', '\%'), '_', '\_')"
     pattern_ops = {
         'contains': r"LIKE '%' || {} || '%' ESCAPE '\'",
-        'icontains': r"LIKE '%' || UPPER({}) || '%' ESCAPE '\'",
+        'icontains': r"LIKE CAST('%' || UPPER({}) || '%' AS VARCHAR(4000)) ESCAPE '\'",
         'startswith': r"LIKE {} || '%' ESCAPE '\'",
         'istartswith': r"LIKE UPPER({}) || '%%' ESCAPE '\'",
         'endswith': r"LIKE '%%' || {} ESCAPE '\'",
