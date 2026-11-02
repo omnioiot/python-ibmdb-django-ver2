@@ -26,6 +26,7 @@ except ImportError as e:
 
 from decimal import Decimal
 import regex
+import uuid
 
 import datetime
 # For checking django's version
@@ -193,6 +194,9 @@ class DB2CursorWrapper( Database.Cursor ):
                     param = timezone.make_aware( param, default_timezone )
                 param = param.astimezone(timezone.utc).replace(tzinfo=None)
                 parameters[index] = param
+
+            if isinstance( parameters[index], uuid.UUID ):
+                parameters[index] = parameters[index].hex
 
             need_quote = ''
             if (select_update and isinstance(parameters[index], Decimal)):
